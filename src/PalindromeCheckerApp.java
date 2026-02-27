@@ -1,69 +1,61 @@
 import java.util.*;
-import java.io.*;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // =========================
-        // UC1: Welcome Message
-        // =========================
+        // ================= UC1 =================
+        // Welcome Message
         System.out.println("Welcome to Palindrome Checker App!");
+        System.out.println("---------------------------------\n");
 
-        // =========================
-        // UC2: Hardcoded Palindrome Check
-        // =========================
+        // ================= UC2 =================
+        // Hardcoded Palindrome Check
         String word = "madam";
         String reversed = new StringBuilder(word).reverse().toString();
 
         if (word.equalsIgnoreCase(reversed)) {
-            System.out.println(word + " is a palindrome. (UC2)");
+            System.out.println("UC2: " + word + " is a palindrome.");
         } else {
-            System.out.println(word + " is not a palindrome. (UC2)");
+            System.out.println("UC2: " + word + " is not a palindrome.");
         }
 
-        // =========================
-        // UC3: Palindrome Using String Reverse (Loop)
-        // =========================
+        // ================= UC3 =================
+        // Palindrome using String Reverse (Loop)
         String inputUC3 = "level";
-        String revUC3 = "";
+        String reversedUC3 = "";
 
         for (int i = inputUC3.length() - 1; i >= 0; i--) {
-            revUC3 = revUC3 + inputUC3.charAt(i);
+            reversedUC3 = reversedUC3 + inputUC3.charAt(i);
         }
 
-        if (inputUC3.equals(revUC3)) {
-            System.out.println(inputUC3 + " is a palindrome. (UC3)");
+        if (inputUC3.equals(reversedUC3)) {
+            System.out.println("UC3: " + inputUC3 + " is a palindrome.");
         } else {
-            System.out.println(inputUC3 + " is not a palindrome. (UC3)");
+            System.out.println("UC3: " + inputUC3 + " is not a palindrome.");
         }
 
-        // =========================
-        // UC4: Palindrome Using char[] + Two Pointer
-        // =========================
+        // ================= UC4 =================
+        // Two Pointer using char[]
         String inputUC4 = "radar";
-        char[] arr = inputUC4.toCharArray();
-        int left = 0, right = arr.length - 1;
+        char[] chars = inputUC4.toCharArray();
         boolean isPalindromeUC4 = true;
 
-        while (left < right) {
-            if (arr[left] != arr[right]) {
+        int start = 0, end = chars.length - 1;
+        while (start < end) {
+            if (chars[start] != chars[end]) {
                 isPalindromeUC4 = false;
                 break;
             }
-            left++;
-            right--;
+            start++;
+            end--;
         }
 
-        if (isPalindromeUC4) {
-            System.out.println(inputUC4 + " is a palindrome. (UC4)");
-        } else {
-            System.out.println(inputUC4 + " is not a palindrome. (UC4)");
-        }
+        System.out.println("UC4: " + inputUC4 +
+                (isPalindromeUC4 ? " is a palindrome." : " is not a palindrome."));
 
-        // =========================
-        // UC5: Palindrome Using Stack
-        // =========================
+        // ================= UC5 =================
+        // Stack Based Palindrome
         String inputUC5 = "civic";
         Stack<Character> stack = new Stack<>();
 
@@ -79,15 +71,11 @@ public class PalindromeCheckerApp {
             }
         }
 
-        if (isPalindromeUC5) {
-            System.out.println(inputUC5 + " is a palindrome. (UC5)");
-        } else {
-            System.out.println(inputUC5 + " is not a palindrome. (UC5)");
-        }
+        System.out.println("UC5: " + inputUC5 +
+                (isPalindromeUC5 ? " is a palindrome." : " is not a palindrome."));
 
-        // =========================
-        // UC6: Queue + Stack Palindrome Check
-        // =========================
+        // ================= UC6 =================
+        // Queue + Stack (FIFO vs LIFO)
         String inputUC6 = "level";
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stackUC6 = new Stack<>();
@@ -99,21 +87,17 @@ public class PalindromeCheckerApp {
 
         boolean isPalindromeUC6 = true;
         while (!queue.isEmpty()) {
-            if (!queue.poll().equals(stackUC6.pop())) {
+            if (!queue.remove().equals(stackUC6.pop())) {
                 isPalindromeUC6 = false;
                 break;
             }
         }
 
-        if (isPalindromeUC6) {
-            System.out.println(inputUC6 + " is a palindrome. (UC6)");
-        } else {
-            System.out.println(inputUC6 + " is not a palindrome. (UC6)");
-        }
+        System.out.println("UC6: " + inputUC6 +
+                (isPalindromeUC6 ? " is a palindrome." : " is not a palindrome."));
 
-        // =========================
-        // UC7: Deque Based Palindrome Check
-        // =========================
+        // ================= UC7 =================
+        // Deque Based Palindrome
         String inputUC7 = "refer";
         Deque<Character> deque = new ArrayDeque<>();
 
@@ -129,102 +113,64 @@ public class PalindromeCheckerApp {
             }
         }
 
-        if (isPalindromeUC7) {
-            System.out.println(inputUC7 + " is a palindrome. (UC7)");
-        } else {
-            System.out.println(inputUC7 + " is not a palindrome. (UC7)");
-        }
+        System.out.println("UC7: " + inputUC7 +
+                (isPalindromeUC7 ? " is a palindrome." : " is not a palindrome."));
 
-        // =========================
-        // UC8: Linked List Based Palindrome Check
-        // =========================
+        // ================= UC8 =================
+        // Linked List Based Palindrome
         String inputUC8 = "level";
-        Node head = createLinkedList(inputUC8);
+        LinkedList<Character> list = new LinkedList<>();
 
-        if (isPalindromeLinkedList(head)) {
-            System.out.println(inputUC8 + " is a palindrome. (UC8)");
-        } else {
-            System.out.println(inputUC8 + " is not a palindrome. (UC8)");
+        for (char c : inputUC8.toCharArray()) {
+            list.add(c);
         }
 
-        // =========================
-        // UC9: Recursive Palindrome Check
-        // =========================
-        String inputUC9 = "racecar";
-
-        if (isPalindromeRecursive(inputUC9, 0, inputUC9.length() - 1)) {
-            System.out.println(inputUC9 + " is a palindrome. (UC9)");
-        } else {
-            System.out.println(inputUC9 + " is not a palindrome. (UC9)");
-        }
-    }
-
-    // =========================
-    // UC8 Helper Methods (Linked List)
-    // =========================
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    static Node createLinkedList(String str) {
-        Node head = null, tail = null;
-
-        for (char c : str.toCharArray()) {
-            Node node = new Node(c);
-            if (head == null) {
-                head = tail = node;
-            } else {
-                tail.next = node;
-                tail = node;
+        boolean isPalindromeUC8 = true;
+        while (list.size() > 1) {
+            if (!list.removeFirst().equals(list.removeLast())) {
+                isPalindromeUC8 = false;
+                break;
             }
         }
-        return head;
+
+        System.out.println("UC8: " + inputUC8 +
+                (isPalindromeUC8 ? " is a palindrome." : " is not a palindrome."));
+
+        // ================= UC9 =================
+        // Recursive Palindrome Check
+        String inputUC9 = "madam";
+        boolean isPalindromeUC9 = isPalindromeRecursive(inputUC9, 0, inputUC9.length() - 1);
+
+        System.out.println("UC9: " + inputUC9 +
+                (isPalindromeUC9 ? " is a palindrome." : " is not a palindrome."));
+
+        // ================= UC10 =================
+        // Ignore Case & Spaces
+        String inputUC10 = "Never Odd Or Even";
+        String normalized = inputUC10.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindromeUC10 = true;
+        int i = 0, j = normalized.length() - 1;
+
+        while (i < j) {
+            if (normalized.charAt(i) != normalized.charAt(j)) {
+                isPalindromeUC10 = false;
+                break;
+            }
+            i++;
+            j--;
+        }
+
+        System.out.println("UC10: \"" + inputUC10 + "\"" +
+                (isPalindromeUC10 ? " is a palindrome." : " is not a palindrome."));
     }
 
-    static Node reverse(Node head) {
-        Node prev = null, curr = head;
-
-        while (curr != null) {
-            Node next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
-
-    static boolean isPalindromeLinkedList(Node head) {
-        if (head == null || head.next == null) return true;
-
-        Node slow = head, fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node secondHalf = reverse(slow.next);
-        Node firstHalf = head;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) return false;
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-        return true;
-    }
-
-    // =========================
-    // UC9 Helper Method (Recursion)
-    // =========================
+    // Helper method for UC9
     static boolean isPalindromeRecursive(String str, int start, int end) {
-        if (start >= end) return true;
-        if (str.charAt(start) != str.charAt(end)) return false;
+        if (start >= end)
+            return true;
+        if (str.charAt(start) != str.charAt(end))
+            return false;
         return isPalindromeRecursive(str, start + 1, end - 1);
     }
 }
