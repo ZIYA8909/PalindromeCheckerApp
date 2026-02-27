@@ -14,5 +14,19 @@ public class PalindromeCheckerApp {
         } else {
             System.out.println(word + " is not a palindrome.");
         }
+
+        // UC3: Palindrome Check Using String Reverse (using loop)
+        String input = "level";
+        String reversedWord = "";
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversedWord = reversedWord + input.charAt(i);
+        }
+
+        if (input.equals(reversedWord)) {
+            System.out.println(input + " is a palindrome (UC3).");
+        } else {
+            System.out.println(input + " is not a palindrome (UC3).");
+        }
     }
 }
