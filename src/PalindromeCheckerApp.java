@@ -6,7 +6,7 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
         System.out.println("Welcome to Palindrome Checker App");
-        System.out.println("--------------------------------");
+        System.out.println("================================");
 
         // UC1
         System.out.println("UC1: Application Started");
@@ -41,29 +41,39 @@ public class PalindromeCheckerApp {
 
         // UC9
         String uc9 = "madam";
-        System.out.println("UC9: " + uc9 + " -> " + isPalindromeRecursive(uc9, 0, uc9.length() - 1));
+        System.out.println("UC9: " + uc9 + " -> " +
+                isPalindromeRecursive(uc9, 0, uc9.length() - 1));
 
         // UC10
         String uc10 = "Never Odd Or Even";
-        System.out.println("UC10: " + uc10 + " -> " + isPalindromeIgnoreCaseSpace(uc10));
+        System.out.println("UC10: " + uc10 + " -> " +
+                isPalindromeIgnoreCaseSpace(uc10));
 
         // UC11
         PalindromeService service = new PalindromeService();
-        System.out.println("UC11: RaceCar -> " + service.checkPalindrome("RaceCar"));
+        System.out.println("UC11: RaceCar -> " +
+                service.checkPalindrome("RaceCar"));
 
-        // UC12 (STRATEGY PATTERN)
+        // UC12 (Strategy Pattern)
         PalindromeContext context = new PalindromeContext();
 
         context.setStrategy(new StackStrategy());
-        System.out.println("UC12 (Stack Strategy): level -> " + context.execute("level"));
+        System.out.println("UC12 (Stack Strategy): level -> " +
+                context.execute("level"));
 
         context.setStrategy(new DequeStrategy());
-        System.out.println("UC12 (Deque Strategy): level -> " + context.execute("level"));
+        System.out.println("UC12 (Deque Strategy): level -> " +
+                context.execute("level"));
+
+        // UC13 (Performance Comparison)
+        System.out.println("\nUC13: Performance Comparison");
+        performanceTest("levellevellevellevel");
     }
 
     // ================= UC2 =================
     static boolean isPalindromeReverse(String s) {
-        return s.equalsIgnoreCase(new StringBuilder(s).reverse().toString());
+        return s.equalsIgnoreCase(
+                new StringBuilder(s).reverse().toString());
     }
 
     // ================= UC3 =================
@@ -145,16 +155,41 @@ public class PalindromeCheckerApp {
         }
         return true;
     }
+
+    // ================= UC13 =================
+    static void performanceTest(String input) {
+
+        long start, end;
+
+        start = System.nanoTime();
+        isPalindromeReverse(input);
+        end = System.nanoTime();
+        System.out.println("Reverse method time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeTwoPointer(input);
+        end = System.nanoTime();
+        System.out.println("Two-pointer method time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeStack(input);
+        end = System.nanoTime();
+        System.out.println("Stack method time: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        isPalindromeDeque(input);
+        end = System.nanoTime();
+        System.out.println("Deque method time: " + (end - start) + " ns");
+    }
 }
 
 // ================= UC11 =================
 class PalindromeService {
     public boolean checkPalindrome(String input) {
-        String clean = input.toLowerCase();
-        int i = 0, j = clean.length() - 1;
+        String s = input.toLowerCase();
+        int i = 0, j = s.length() - 1;
         while (i < j) {
-            if (clean.charAt(i++) != clean.charAt(j--)) return false;
-            i++;
+            if (s.charAt(i++) != s.charAt(j--)) return false;
         }
         return true;
     }
