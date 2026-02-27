@@ -1,22 +1,21 @@
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // UC1: Welcome message
+        // UC1
         System.out.println("Welcome to Palindrome Checker App!");
 
-        // UC2: Hardcoded Palindrome
+        // UC2
         String word = "madam";
         String reversed = new StringBuilder(word).reverse().toString();
         System.out.println(word.equalsIgnoreCase(reversed)
                 ? word + " is a palindrome."
                 : word + " is not a palindrome.");
 
-        // UC3: String reverse using loop
+        // UC3
         String input = "level";
         String rev = "";
         for (int i = input.length() - 1; i >= 0; i--) {
@@ -26,7 +25,7 @@ public class PalindromeCheckerApp {
                 ? input + " is a palindrome (UC3)."
                 : input + " is not a palindrome (UC3).");
 
-        // UC4: char[] + two pointer
+        // UC4
         String text = "radar";
         char[] arr = text.toCharArray();
         int start = 0, end = arr.length - 1;
@@ -44,47 +43,60 @@ public class PalindromeCheckerApp {
                 ? text + " is a palindrome (UC4)."
                 : text + " is not a palindrome (UC4).");
 
-        // UC5: Stack based palindrome
+        // UC5
+        java.util.Stack<Character> stack = new java.util.Stack<>();
         String stackInput = "noon";
-        Stack<Character> stack = new Stack<>();
-
         for (char ch : stackInput.toCharArray()) {
             stack.push(ch);
         }
-
-        String stackReverse = "";
+        String stackRev = "";
         while (!stack.isEmpty()) {
-            stackReverse += stack.pop();
+            stackRev += stack.pop();
         }
-
-        System.out.println(stackInput.equals(stackReverse)
+        System.out.println(stackInput.equals(stackRev)
                 ? stackInput + " is a palindrome (UC5)."
                 : stackInput + " is not a palindrome (UC5).");
 
-        // UC6: Queue + Stack based palindrome
+        // UC6
+        java.util.Queue<Character> queue = new java.util.LinkedList<>();
+        java.util.Stack<Character> stackQS = new java.util.Stack<>();
         String qsInput = "civic";
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stackQS = new Stack<>();
-
-        // Insert characters into both Queue and Stack
         for (char ch : qsInput.toCharArray()) {
-            queue.add(ch);     // FIFO
-            stackQS.push(ch);  // LIFO
+            queue.add(ch);
+            stackQS.push(ch);
         }
 
-        boolean isPalindromeQS = true;
-
-        // Compare dequeue vs pop
+        boolean isQS = true;
         while (!queue.isEmpty()) {
-            if (queue.remove() != stackQS.pop()) {
-                isPalindromeQS = false;
+            if (!queue.remove().equals(stackQS.pop())) {
+                isQS = false;
+                break;
+            }
+        }
+        System.out.println(isQS
+                ? qsInput + " is a palindrome (UC6)."
+                : qsInput + " is not a palindrome (UC6).");
+
+        // UC7: Deque Based Optimized Palindrome Check
+        String dequeInput = "refer";
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char ch : dequeInput.toCharArray()) {
+            deque.addLast(ch);
+        }
+
+        boolean isDequePalindrome = true;
+
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                isDequePalindrome = false;
                 break;
             }
         }
 
-        System.out.println(isPalindromeQS
-                ? qsInput + " is a palindrome (UC6)."
-                : qsInput + " is not a palindrome (UC6).");
+        System.out.println(isDequePalindrome
+                ? dequeInput + " is a palindrome (UC7)."
+                : dequeInput + " is not a palindrome (UC7).");
     }
 }
