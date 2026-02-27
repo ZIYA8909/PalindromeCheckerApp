@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
@@ -7,60 +9,82 @@ public class PalindromeCheckerApp {
         // UC1: Welcome message
         System.out.println("Welcome to Palindrome Checker App!");
 
-        // UC2: Hardcoded Palindrome Check
+        // UC2: Hardcoded Palindrome
         String word = "madam";
         String reversed = new StringBuilder(word).reverse().toString();
         System.out.println(word.equalsIgnoreCase(reversed)
                 ? word + " is a palindrome."
                 : word + " is not a palindrome.");
 
-        // UC3: Palindrome using string reverse (loop)
+        // UC3: String reverse using loop
         String input = "level";
-        String reversedWord = "";
+        String rev = "";
         for (int i = input.length() - 1; i >= 0; i--) {
-            reversedWord += input.charAt(i);
+            rev += input.charAt(i);
         }
-        System.out.println(input.equals(reversedWord)
+        System.out.println(input.equals(rev)
                 ? input + " is a palindrome (UC3)."
                 : input + " is not a palindrome (UC3).");
 
-        // UC4: Palindrome using char[] & two pointers
+        // UC4: char[] + two pointer
         String text = "radar";
-        char[] chars = text.toCharArray();
-        int start = 0, end = chars.length - 1;
-        boolean isPalindrome = true;
+        char[] arr = text.toCharArray();
+        int start = 0, end = arr.length - 1;
+        boolean isPal = true;
 
         while (start < end) {
-            if (chars[start] != chars[end]) {
-                isPalindrome = false;
+            if (arr[start] != arr[end]) {
+                isPal = false;
                 break;
             }
             start++;
             end--;
         }
-        System.out.println(isPalindrome
+        System.out.println(isPal
                 ? text + " is a palindrome (UC4)."
                 : text + " is not a palindrome (UC4).");
 
-        // UC5: Palindrome using Stack
+        // UC5: Stack based palindrome
         String stackInput = "noon";
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
         for (char ch : stackInput.toCharArray()) {
             stack.push(ch);
         }
 
-        // Pop characters to reverse
-        String stackReversed = "";
+        String stackReverse = "";
         while (!stack.isEmpty()) {
-            stackReversed += stack.pop();
+            stackReverse += stack.pop();
         }
 
-        if (stackInput.equals(stackReversed)) {
-            System.out.println(stackInput + " is a palindrome (UC5).");
-        } else {
-            System.out.println(stackInput + " is not a palindrome (UC5).");
+        System.out.println(stackInput.equals(stackReverse)
+                ? stackInput + " is a palindrome (UC5)."
+                : stackInput + " is not a palindrome (UC5).");
+
+        // UC6: Queue + Stack based palindrome
+        String qsInput = "civic";
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stackQS = new Stack<>();
+
+        // Insert characters into both Queue and Stack
+        for (char ch : qsInput.toCharArray()) {
+            queue.add(ch);     // FIFO
+            stackQS.push(ch);  // LIFO
         }
+
+        boolean isPalindromeQS = true;
+
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stackQS.pop()) {
+                isPalindromeQS = false;
+                break;
+            }
+        }
+
+        System.out.println(isPalindromeQS
+                ? qsInput + " is a palindrome (UC6)."
+                : qsInput + " is not a palindrome (UC6).");
     }
 }
